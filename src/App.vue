@@ -6,8 +6,9 @@ import type { QuizQuestion, ApiResponse } from "@/interface/QuizQuestion";
 const quizQuestion = ref<QuizQuestion | null>(null);
 const answers = ref<string[]>([]);
 const answerResult = ref("");
-const isCorrect = ref<Boolean | null>(null);
+const isCorrect = ref<boolean | null>(null);
 const selectedAnswer = ref("");
+const hasAnswered = ref(false);
 
 
 const loading = ref(false);
@@ -37,7 +38,7 @@ const shuffleAnswers = (items: string[]) => {
 const getNewQuestion = async () => {
 
   const now = Date.now();
-  selectedAnswer.value = "";
+
 
   if (now - lastRequestTime.value < 5000 ) {
     message.value = "Aguerde alguns segundes de atualizar.";
@@ -50,7 +51,8 @@ const getNewQuestion = async () => {
   message.value = "";
   answerResult.value = "";
   isCorrect.value = null;
-
+  hasAnswered.value = false;
+  selectedAnswer.value = "";
 
 
   try {
@@ -79,7 +81,7 @@ const getNewQuestion = async () => {
 };
 
 const submitAnswer = () => {
-
+  if(hasAnswered.value) return;
   if(!quizQuestion.value) return;
 
   if(!selectedAnswer.value.trim()) {
@@ -97,9 +99,12 @@ const submitAnswer = () => {
     return;
   }
 
+  else {
   answerResult.value = "Resposta incorreta. Correta: " + decodeHtml(quizQuestion.value.correct_answer);
   isCorrect.value = false;
+  }
 
+  hasAnswered.value = true;
 
 };
 
@@ -133,7 +138,11 @@ onMounted(() => {
       </div>
     </div>
 
-    <button class="send" type="button" @click="submitAnswer">
+    <button
+      class="send"
+      type="button"
+      @click="submitAnswer"
+      :disabled="hasAnswered" || !selectedAnswer>
          Enviar resposta
     </button>
 
@@ -184,6 +193,11 @@ section.score span {
   padding: 8px;
   font-weight: bold;
   border: 1px solid black;
+}
+
+button.send:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 </style>
