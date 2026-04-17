@@ -40,7 +40,7 @@ export function useQuiz() {
     const now = Date.now();
 
     if (now - lastRequestTime.value < 5000) {
-      message.value = "Aguerde alguns segundos para atualizar.";
+      message.value = "atualizar a pagina(Não pode atualizar a página menos de 5 segundos).";
       return;
     }
 
@@ -68,7 +68,7 @@ export function useQuiz() {
       }
     } catch (error) {
       console.error("Error:", error);
-      message.value = "Error ao carregar a pergunta. Espera 5 segundos";
+      message.value = "Error ao carregar a pergunta. Espera 5 segundos e atualizar a página";
     } finally {
       loading.value = false;
     }
