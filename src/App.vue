@@ -11,6 +11,8 @@ const {
   hasAnswered,
   loading,
   message,
+  correctAnswers,
+  wrongAnswers,
   handleMainButton,
 } = useQuiz();
 </script>
@@ -18,6 +20,13 @@ const {
 
 <template>
   <div id="app">
+
+    <section class="score">
+
+      <span>Acertos: {{ correctAnswers }}</span>
+      <span>Erros: {{ wrongAnswers }}</span>
+
+    </section>
 
     <template v-if="loading || message">
       <StatusInfo :message="message" :loading="loading" />
@@ -48,4 +57,22 @@ const {
   margin: 60px auto;
   max-width: 960px;
 }
+
+.score {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.score span {
+  padding: 8px 12px;
+  border: 1px solid #2c3e50;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+
 </style>

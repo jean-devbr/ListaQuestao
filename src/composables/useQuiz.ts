@@ -1,4 +1,4 @@
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { api } from "@/service/api";
 import type { QuizQuestion, ApiResponse } from "@/interface/QuizQuestion";
 
@@ -13,6 +13,9 @@ export function useQuiz() {
   const loading = ref(false);
   const lastRequestTime = ref(0);
   const message = ref("");
+
+  const correctAnswers = ref(0);
+  const wrongAnswers = ref(0);
 
   const decodeHtml = (value: string) => {
     const parser = new DOMParser();
@@ -37,7 +40,7 @@ export function useQuiz() {
     const now = Date.now();
 
     if (now - lastRequestTime.value < 5000) {
-      message.value = "Aguerde alguns segundos de atualizar.";
+      message.value = "Aguerde alguns segundos para atualizar.";
       return;
     }
 
@@ -87,12 +90,14 @@ export function useQuiz() {
     if (typed === expected) {
       answerResult.value = "Resposta corretar! Clique para próxima questão.";
       isCorrect.value = true;
+      correctAnswers.value ++;
     } else {
       answerResult.value =
         "Resposta incorreta. Correta: " +
         decodeHtml(quizQuestion.value.correct_answer) +
         ". Clique para próxima questão.";
       isCorrect.value = false;
+      wrongAnswers.value ++;
     }
 
     hasAnswered.value = true;
@@ -109,6 +114,8 @@ export function useQuiz() {
     submitAnswer();
   };
 
+
+
   onMounted(() => {
     getNewQuestion();
   });
@@ -122,6 +129,8 @@ export function useQuiz() {
     hasAnswered,
     loading,
     message,
+    correctAnswers,
+    wrongAnswers,
     getNewQuestion,
     handleMainButton,
     submitAnswer,
