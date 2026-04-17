@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import { api } from "@/service/api";
 import type { QuizQuestion, ApiResponse } from "@/interface/QuizQuestion";
+import StatusInfo from "./components/StatusInfo.vue";
+import QuizQuestionCard from "./components/QuizQuestionCard.vue";
 
 const quizQuestion = ref<QuizQuestion | null>(null);
 const answers = ref<string[]>([]);
@@ -132,36 +134,22 @@ onMounted(() => {
 
 <template>
   <div id="app">
-    <p v-if="message"> {{ message }}</p>
-    <p v-if="loading"> Carregando a pergunta...</p>
 
-    <template v-else-if="quizQuestion">
-      <h1 v-html="quizQuestion?.question || ''"></h1>
-
-    <div class="answer-input">
-
-      <div v-for="(answer, index) in answers" :key="answer" class="option">
-        <input
-        :id="'answer-' + index"
-        v-model="selectedAnswer"
-        type="radio"
-        name="quiz-answer"
-        :value="answer"
-      />
-      <label :for="'answer-' + index">{{ answer }}</label>
-      </div>
-    </div>
-
-    <button
-      class="send"
-      type="button"
-      @click="handleMainButton"
-      :disabled="loading || (!hasAnswered && !selectedAnswer)">
-         {{ hasAnswered ? "Próxima questão" : "Enviar Resposta" }}
-    </button>
-
-    <p v-if="answerResult">{{ answerResult }}</p>
+    <template v-if="loading || message">
+      <StatusInfo :message="message" :loading="loading" />
     </template>
+
+   <template v-else-if="quizQuestion">
+      <QuizQuestionCard
+      :quiz-question="quizQuestion"
+      :answers="answers"
+      :loading="loading"
+      :has-answered="hasAnswered"
+      :answer-result="answerResult"
+      v-model="selectedAnswer"
+      @main-action="handleMainButton"
+    />
+  </template>
  </div>
 </template>
 
@@ -176,42 +164,4 @@ onMounted(() => {
   margin: 60px auto;
   max-width: 960px;
 }
-
-h1 {
-  margin-top: 40px;
-}
-
-input[type='radio'] {
-  margin: 12px 4px;
-}
-
-button.send {
-  margin-top: 12px;
-  height: 40px;
-  min-width: 120px;
-  padding: 0 16px;
-  color: #fff;
-  background-color: #1867c0;
-  border: 1px solid #1867c0;
-  cursor: pointer;
-}
-
-section.score {
-  border-bottom: 1px solid black;
-  padding: 24px;
-  font-size: 18px;
-}
-
-/* Aqui estava o SCSS aninhado */
-section.score span {
-  padding: 8px;
-  font-weight: bold;
-  border: 1px solid black;
-}
-
-button.send:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 </style>
