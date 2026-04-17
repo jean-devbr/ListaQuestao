@@ -1,48 +1,87 @@
 # ListaQuestao
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicacao web em Vue 3 + TypeScript que busca perguntas de programacao na Open Trivia DB, embaralha alternativas e valida respostas.
 
-## Recommended IDE Setup
+## Objetivo
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Projeto de estudo para praticar:
 
-## Recommended Browser Setup
+- Componentizacao com Vue
+- Estado reativo com Composition API
+- Consumo de API
+- Organizacao de logica com composables
+- Tipagem com TypeScript
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Funcionalidades
 
-## Type Support for `.vue` Imports in TS
+- Busca uma pergunta por vez na API
+- Exibe enunciado e alternativas de multipla escolha
+- Embaralha respostas a cada rodada
+- Valida se a alternativa selecionada esta correta
+- Exibe feedback de acerto ou erro
+- Alterna acao do botao entre enviar resposta e proxima questao
+- Exibe estado de carregamento e mensagens de status
+- Evita chamadas repetidas em curto intervalo de tempo
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Tecnologias
 
-## Customize configuration
+- Vue 3
+- TypeScript
+- Vite
+- Axios
+- ESLint
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Estrutura
 
-## Project Setup
+- src/App.vue: composicao da tela principal
+- src/components/StatusInfo.vue: mensagens e carregamento
+- src/components/QuizQuestionCard.vue: pergunta, opcoes e botao de acao
+- src/composables/useQuiz.ts: estado e regras do quiz
+- src/interface/QuizQuestion.ts: tipos da API
+- src/service/api.ts: cliente HTTP
+
+## Como executar
+
+Pre-requisitos:
+
+- Node.js 18 ou superior
+- npm
+
+Instalacao:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Ambiente de desenvolvimento:
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Build de producao:
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+Lint:
 
 ```sh
 npm run lint
 ```
+
+## Fluxo da aplicacao
+
+1. A aplicacao inicia e busca uma nova pergunta.
+2. A API retorna enunciado, resposta correta e respostas incorretas.
+3. As alternativas sao embaralhadas e exibidas.
+4. O usuario escolhe uma opcao e envia.
+5. O sistema compara a resposta e mostra o resultado.
+6. O botao permite carregar a proxima questao.
+
+## Proximas melhorias
+
+- Placar de acertos e erros
+- Historico de perguntas respondidas
+- Configuracao de categoria e dificuldade
