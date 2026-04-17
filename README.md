@@ -1,6 +1,6 @@
 # ListaQuestao
 
-Aplicacao web em Vue 3 + TypeScript que busca perguntas de programacao na Open Trivia DB, embaralha alternativas e valida respostas.
+Aplicação web em Vue 3 + TypeScript que busca perguntas de programação na Open Trivia DB, embaralha alternativas e valida respostas.
 
 ## Objetivo
 
@@ -33,9 +33,9 @@ Projeto de estudo para praticar:
 
 ## Estrutura
 
-- src/App.vue: composicao da tela principal
+- src/App.vue: composição da tela principal
 - src/components/StatusInfo.vue: mensagens e carregamento
-- src/components/QuizQuestionCard.vue: pergunta, opcoes e botao de acao
+- src/components/QuizQuestionCard.vue: pergunta, opções e botão de acão
 - src/composables/useQuiz.ts: estado e regras do quiz
 - src/interface/QuizQuestion.ts: tipos da API
 - src/service/api.ts: cliente HTTP
@@ -47,7 +47,7 @@ Pre-requisitos:
 - Node.js 18 ou superior
 - npm
 
-Instalacao:
+Instalação:
 
 ```sh
 npm install
@@ -59,7 +59,7 @@ Ambiente de desenvolvimento:
 npm run dev
 ```
 
-Build de producao:
+Build de produção:
 
 ```sh
 npm run build
@@ -71,17 +71,17 @@ Lint:
 npm run lint
 ```
 
-## Fluxo da aplicacao
+## Fluxo da aplicação
 
-1. A aplicacao inicia e busca uma nova pergunta.
+1. A aplicação inicia e busca uma nova pergunta.
 2. A API retorna enunciado, resposta correta e respostas incorretas.
-3. As alternativas sao embaralhadas e exibidas.
-4. O usuario escolhe uma opcao e envia.
+3. As alternativas são embaralhadas e exibidas.
+4. O usuário escolhe uma opcao e envia.
 5. O sistema compara a resposta e mostra o resultado.
 6. O botao permite carregar a proxima questao.
 
-## Proximas melhorias
+## Próximas melhorias
 
 - Placar de acertos e erros
-- Historico de perguntas respondidas
-- Configuracao de categoria e dificuldade
+- Histórico de perguntas respondidas
+- Configuração de categoria e dificuldade
