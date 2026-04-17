@@ -41,7 +41,7 @@ const getNewQuestion = async () => {
 
 
   if (now - lastRequestTime.value < 5000 ) {
-    message.value = "Aguerde alguns segundes de atualizar.";
+    message.value = "Aguerde alguns segundos de atualizar.";
     return;
   }
 
@@ -80,6 +80,17 @@ const getNewQuestion = async () => {
 
 };
 
+const handleMainButton = async () => {
+  if (loading.value) return;
+
+  if (hasAnswered.value) {
+    await getNewQuestion();
+    return;
+  }
+
+  submitAnswer();
+};
+
 const submitAnswer = () => {
   if(hasAnswered.value) return;
   if(!quizQuestion.value) return;
@@ -94,19 +105,22 @@ const submitAnswer = () => {
   const typed = normalize(selectedAnswer.value);
 
   if (typed === expected) {
-    answerResult.value = "Resposta corretar!";
+    answerResult.value = "Resposta corretar! Clique para próxima questão.";
     isCorrect.value = true;
-    return;
   }
 
   else {
-  answerResult.value = "Resposta incorreta. Correta: " + decodeHtml(quizQuestion.value.correct_answer);
-  isCorrect.value = false;
+    answerResult.value = "Resposta incorreta. Correta: "
+    + decodeHtml(quizQuestion.value.correct_answer)
+    + ". Clique para próxima questão.";
+    isCorrect.value = false;
   }
 
   hasAnswered.value = true;
 
 };
+
+
 
 
 onMounted(() => {
@@ -141,9 +155,9 @@ onMounted(() => {
     <button
       class="send"
       type="button"
-      @click="submitAnswer"
-      :disabled="hasAnswered" || !selectedAnswer>
-         Enviar resposta
+      @click="handleMainButton"
+      :disabled="loading || (!hasAnswered && !selectedAnswer)">
+         {{ hasAnswered ? "Próxima questão" : "Enviar Resposta" }}
     </button>
 
     <p v-if="answerResult">{{ answerResult }}</p>
