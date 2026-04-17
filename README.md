@@ -79,9 +79,8 @@ npm run lint
 4. O usuário escolhe uma opcao e envia.
 5. O sistema compara a resposta e mostra o resultado.
 6. O botao permite carregar a proxima questao.
+7. Placar de acertos e erros
 
 ## Próximas melhorias
-
-- Placar de acertos e erros
 - Histórico de perguntas respondidas
 - Configuração de categoria e dificuldade
